@@ -33,70 +33,68 @@ tests/
 
 ---
 
-## Phase 1: Setup (프로젝트 초기화)
+## Phase 1: Setup (프로젝트 초기화) ✅ COMPLETE
 
 **Purpose**: Vite + React + TypeScript 프로젝트 초기화 및 기본 설정
 
-- [ ] T001 Create project with Vite React-TS template at repository root
-- [ ] T002 Install core dependencies (react, react-dom, echarts, echarts-for-react, @tanstack/react-query) in package.json
-- [ ] T003 [P] Install dev dependencies (vitest, @testing-library/react, @testing-library/jest-dom) in package.json
-- [ ] T004 [P] Install styling dependencies (tailwindcss, postcss, autoprefixer) in package.json
-- [ ] T005 Configure TypeScript strict mode in tsconfig.json
-- [ ] T006 [P] Configure Tailwind CSS in tailwind.config.js and src/index.css
-- [ ] T007 [P] Configure Vitest in vitest.config.ts
-- [ ] T008 [P] Configure ESLint and Prettier in .eslintrc.cjs and .prettierrc
-- [ ] T009 Create directory structure (src/components/, src/services/, src/types/, src/hooks/, src/utils/, tests/)
-- [ ] T010 Configure Vite for GitHub Pages deployment (base path) in vite.config.ts
-- [ ] T011 [P] Create GitHub Actions workflow for deployment in .github/workflows/deploy.yml
+- [x] T001 Create project with Vite React-TS template at repository root
+- [x] T002 Install core dependencies (react, react-dom, echarts, echarts-for-react, @tanstack/react-query) in package.json
+- [x] T003 [P] Install dev dependencies (vitest, @testing-library/react, @testing-library/jest-dom) in package.json
+- [x] T004 [P] Install styling dependencies (tailwindcss, postcss, autoprefixer) in package.json
+- [x] T005 Configure TypeScript strict mode in tsconfig.json
+- [x] T006 [P] Configure Tailwind CSS in tailwind.config.js and src/index.css
+- [x] T007 [P] Configure Vitest in vitest.config.ts
+- [x] T008 [P] Configure ESLint and Prettier in eslint.config.js and .prettierrc
+- [x] T009 Create directory structure (src/components/, src/services/, src/types/, src/hooks/, src/utils/, tests/)
+- [x] T010 Configure Vite for GitHub Pages deployment (base path) in vite.config.ts
+- [x] T011 [P] Create GitHub Actions workflow for deployment in .github/workflows/deploy.yml
 
-**Checkpoint**: 프로젝트 구조 완성, `pnpm dev` 실행 가능
+**Checkpoint**: ✅ 프로젝트 구조 완성, `npm run dev` 실행 가능, `npm run build` 성공
 
 ---
 
-## Phase 2: Foundational (핵심 인프라)
+## Phase 2: Foundational (핵심 인프라) ✅ COMPLETE
 
 **Purpose**: 모든 User Story에서 공유하는 핵심 타입, 서비스, 오류 처리 인프라
 
-**⚠️ CRITICAL**: 이 Phase 완료 전까지 User Story 작업 불가
-
 ### Types (타입 정의)
 
-- [ ] T012 [P] Create DataSource types (DataSource, AuthConfig, ConnectionStatus) in src/types/datasource.ts
-- [ ] T013 [P] Create Query types (Query, TimeRange, QueryType) in src/types/query.ts
-- [ ] T014 [P] Create QueryResult types (QueryResult, ResultData, ResultType, MetricResult) in src/types/result.ts
-- [ ] T015 [P] Create Visualization types (Visualization, VisualizationType, ChartConfig) in src/types/visualization.ts
-- [ ] T016 [P] Create AppState and AppError types (AppState, AppError, ErrorType) in src/types/state.ts
-- [ ] T017 Create type re-exports in src/types/index.ts
+- [x] T012 [P] Create DataSource types (DataSource, AuthConfig, ConnectionStatus) in src/types/datasource.ts
+- [x] T013 [P] Create Query types (Query, TimeRange, QueryType) in src/types/query.ts
+- [x] T014 [P] Create QueryResult types (QueryResult, ResultData, ResultType, MetricResult) in src/types/result.ts
+- [x] T015 [P] Create Visualization types (Visualization, VisualizationType, ChartConfig) in src/types/visualization.ts
+- [x] T016 [P] Create AppState and AppError types (AppState, AppError, ErrorType) in src/types/state.ts
+- [x] T017 Create type re-exports in src/types/index.ts
 
 ### Core Services (핵심 서비스)
 
-- [ ] T018 Implement Prometheus HTTP client (query, queryRange, testConnection) in src/services/prometheus/client.ts
-- [ ] T019 [P] Implement response parser (parseQueryResult, normalizeError) in src/services/prometheus/parser.ts
-- [ ] T020 [P] Implement LocalStorage service (save, load, remove for datasources) in src/services/storage/localStorage.ts
+- [x] T018 Implement Prometheus HTTP client (query, queryRange, testConnection) in src/services/prometheus/client.ts
+- [x] T019 [P] Implement response parser (parseQueryResult, normalizeError) in src/services/prometheus/parser.ts
+- [x] T020 [P] Implement LocalStorage service (save, load, remove for datasources) in src/services/storage/localStorage.ts
 
 ### Error Handling Infrastructure (오류 처리 인프라)
 
-- [ ] T021 Create AppError class with type, message, details, suggestion in src/utils/errors.ts
-- [ ] T022 [P] Create error message mappings (connection, auth, query, cors, timeout) in src/utils/errorMessages.ts
+- [x] T021 Create AppError class with type, message, details, suggestion in src/utils/errors.ts
+- [x] T022 [P] Create error message mappings (connection, auth, query, cors, timeout) in src/utils/errorMessages.ts
 
 ### Common UI Components (공통 UI)
 
-- [ ] T023 [P] Create LoadingSpinner component in src/components/common/LoadingSpinner.tsx
-- [ ] T024 [P] Create ErrorDisplay component (shows message + suggestion) in src/components/common/ErrorDisplay.tsx
-- [ ] T025 [P] Create Button component in src/components/common/Button.tsx
-- [ ] T026 [P] Create Input component in src/components/common/Input.tsx
-- [ ] T027 Create common components re-export in src/components/common/index.ts
+- [x] T023 [P] Create LoadingSpinner component in src/components/common/LoadingSpinner.tsx
+- [x] T024 [P] Create ErrorDisplay component (shows message + suggestion) in src/components/common/ErrorDisplay.tsx
+- [x] T025 [P] Create Button component in src/components/common/Button.tsx
+- [x] T026 [P] Create Input component in src/components/common/Input.tsx
+- [x] T027 Create common components re-export in src/components/common/index.ts
 
 ### App Shell (앱 구조)
 
-- [ ] T028 Setup TanStack Query provider in src/main.tsx
-- [ ] T029 Create basic App layout with header and main content area in src/App.tsx
+- [x] T028 Setup TanStack Query provider in src/main.tsx
+- [x] T029 Create basic App layout with header and main content area in src/App.tsx
 
-**Checkpoint**: Foundation ready - `pnpm dev` 실행 시 빈 앱 레이아웃 표시
+**Checkpoint**: ✅ Foundation ready - `npm run dev` 실행 시 앱 레이아웃 표시
 
 ---
 
-## Phase 3: User Story 1 - PromQL 쿼리 실행 및 자동 시각화 (Priority: P1) 🎯 MVP
+## Phase 3: User Story 1 - PromQL 쿼리 실행 및 자동 시각화 (Priority: P1) 🎯 MVP ✅ COMPLETE
 
 **Goal**: Prometheus URL 입력 → PromQL 쿼리 실행 → 자동 시각화 생성
 
@@ -104,50 +102,52 @@ tests/
 
 ### Core Analyzer Logic (시각화 선택 로직)
 
-- [ ] T030 [P] [US1] Implement result type analyzer (detectResultType) in src/services/analyzer/resultTypeAnalyzer.ts
-- [ ] T031 [P] [US1] Implement series counter (countSeries, countDataPoints) in src/services/analyzer/seriesAnalyzer.ts
-- [ ] T032 [US1] Implement visualization selector (selectVisualization - rule-based decision tree) in src/services/analyzer/visualizationSelector.ts
-- [ ] T033 [US1] Create unit tests for visualization selector (deterministic verification) in tests/unit/analyzer/visualizationSelector.test.ts
+- [x] T030 [P] [US1] Implement result type analyzer (detectResultType) in src/services/analyzer/resultTypeAnalyzer.ts
+- [x] T031 [P] [US1] Implement series counter (countSeries, countDataPoints) in src/services/analyzer/seriesAnalyzer.ts
+- [x] T032 [US1] Implement visualization selector (selectVisualization - rule-based decision tree) in src/services/analyzer/visualizationSelector.ts
+- [x] T033 [US1] Create unit tests for visualization selector (deterministic verification) in tests/unit/analyzer/visualizationSelector.test.ts
 
 ### Chart Spec Generation (차트 스펙 생성)
 
-- [ ] T034 [P] [US1] Implement line chart spec generator in src/services/analyzer/specs/lineChartSpec.ts
-- [ ] T035 [P] [US1] Implement area chart spec generator in src/services/analyzer/specs/areaChartSpec.ts
-- [ ] T036 [P] [US1] Implement bar chart spec generator in src/services/analyzer/specs/barChartSpec.ts
-- [ ] T037 [P] [US1] Implement stat display spec generator in src/services/analyzer/specs/statSpec.ts
-- [ ] T038 [P] [US1] Implement table spec generator in src/services/analyzer/specs/tableSpec.ts
-- [ ] T039 [US1] Create chart spec factory (createChartSpec) in src/services/analyzer/chartSpecFactory.ts
+- [x] T034 [P] [US1] Implement line chart spec generator in src/services/analyzer/specs/lineChartSpec.ts
+- [x] T035 [P] [US1] Implement area chart spec generator in src/services/analyzer/specs/areaChartSpec.ts
+- [x] T036 [P] [US1] Implement bar chart spec generator in src/services/analyzer/specs/barChartSpec.ts
+- [x] T037 [P] [US1] Implement stat display spec generator in src/services/analyzer/specs/statSpec.ts
+- [x] T038 [P] [US1] Implement table spec generator in src/services/analyzer/specs/tableSpec.ts
+- [x] T039 [US1] Create chart spec factory (createChartSpec) in src/services/analyzer/chartSpecFactory.ts
 
 ### Query Execution Hook
 
-- [ ] T040 [US1] Implement usePrometheusQuery hook (execute query, manage loading/error state) in src/hooks/usePrometheusQuery.ts
+- [x] T040 [US1] Implement usePrometheusQuery hook (execute query, manage loading/error state) in src/hooks/usePrometheusQuery.ts
 
 ### Query Editor UI
 
-- [ ] T041 [P] [US1] Create PromQL text input component in src/components/QueryEditor/PromQLInput.tsx
-- [ ] T042 [P] [US1] Create URL input component (temporary, for MVP) in src/components/QueryEditor/UrlInput.tsx
-- [ ] T043 [US1] Create QueryEditor container (combines URL input + PromQL input + execute button) in src/components/QueryEditor/QueryEditor.tsx
-- [ ] T044 [US1] Create QueryEditor re-export in src/components/QueryEditor/index.ts
+- [x] T041 [P] [US1] Create PromQL text input component in src/components/QueryEditor/PromQLInput.tsx
+- [x] T042 [P] [US1] Create URL input component (temporary, for MVP) in src/components/QueryEditor/UrlInput.tsx
+- [x] T043 [US1] Create QueryEditor container (combines URL input + PromQL input + execute button) in src/components/QueryEditor/QueryEditor.tsx
+- [x] T044 [US1] Create QueryEditor re-export in src/components/QueryEditor/index.ts
 
 ### Visualization UI
 
-- [ ] T045 [P] [US1] Create ECharts wrapper component in src/components/Visualization/Chart.tsx
-- [ ] T046 [P] [US1] Create StatDisplay component (single value) in src/components/Visualization/StatDisplay.tsx
-- [ ] T047 [P] [US1] Create DataTable component in src/components/Visualization/DataTable.tsx
-- [ ] T048 [US1] Create VisualizationPanel container (selects and renders appropriate viz) in src/components/Visualization/VisualizationPanel.tsx
-- [ ] T049 [US1] Create Visualization re-export in src/components/Visualization/index.ts
+- [x] T045 [P] [US1] Create ECharts wrapper component in src/components/Visualization/Chart.tsx
+- [x] T046 [P] [US1] Create StatDisplay component (single value) in src/components/Visualization/StatDisplay.tsx
+- [x] T047 [P] [US1] Create DataTable component in src/components/Visualization/DataTable.tsx
+- [x] T048 [US1] Create VisualizationPanel container (selects and renders appropriate viz) in src/components/Visualization/VisualizationPanel.tsx
+- [x] T049 [US1] Create Visualization re-export in src/components/Visualization/index.ts
 
 ### Raw Data Display
 
-- [ ] T050 [US1] Create RawDataViewer component (JSON display with toggle) in src/components/Visualization/RawDataViewer.tsx
+- [x] T050 [US1] Create RawDataViewer component (JSON display with toggle) in src/components/Visualization/RawDataViewer.tsx
 
 ### Integration
 
-- [ ] T051 [US1] Integrate QueryEditor and VisualizationPanel in src/App.tsx
-- [ ] T052 [US1] Add loading state display during query execution in src/App.tsx
-- [ ] T053 [US1] Add error state display for query failures in src/App.tsx
+- [x] T051 [US1] Integrate QueryEditor and VisualizationPanel in src/App.tsx
+- [x] T052 [US1] Add loading state display during query execution in src/App.tsx
+- [x] T053 [US1] Add error state display for query failures in src/App.tsx
 
-**Checkpoint**: MVP 완성 - URL 입력 → PromQL 실행 → 차트 렌더링 전체 흐름 동작
+**Checkpoint**: ✅ MVP 완성 - URL 입력 → PromQL 실행 → 차트 렌더링 전체 흐름 동작
+- 13개 테스트 통과 (결정론적 시각화 검증)
+- 빌드 성공 (dist/ 생성)
 
 ---
 
@@ -242,7 +242,7 @@ tests/
 
 ### UI Polish
 
-- [ ] T079 [P] Add app title, favicon, meta tags in index.html
+- [x] T079 [P] Add app title, favicon, meta tags in index.html
 - [ ] T080 [P] Add responsive layout styles in src/index.css
 - [ ] T081 [P] Add dark mode support (optional) in tailwind.config.js
 
@@ -260,7 +260,7 @@ tests/
 
 - [ ] T086 Run full quickstart.md validation flow
 - [ ] T087 Verify deterministic visualization with snapshot tests in tests/snapshots/
-- [ ] T088 Test production build (`pnpm build`) and preview (`pnpm preview`)
+- [x] T088 Test production build (`npm run build`) and preview (`npm run preview`)
 
 ---
 
@@ -269,112 +269,34 @@ tests/
 ### Phase Dependencies
 
 ```
-Phase 1 (Setup)
+Phase 1 (Setup) ✅
      │
      ▼
-Phase 2 (Foundational) ─────────┬──────────┬──────────┬──────────┐
-     │                          │          │          │          │
-     ▼                          ▼          ▼          ▼          ▼
-Phase 3 (US1/P1) ──────► Phase 4 (US2/P2)  Phase 5 (US3/P3)  Phase 6 (US4/P4)
-     │                          │          │          │
-     └──────────────────────────┴──────────┴──────────┘
-                                │
-                                ▼
-                        Phase 7 (Polish)
+Phase 2 (Foundational) ✅ ────┬──────────┬──────────┬──────────┐
+     │                        │          │          │          │
+     ▼                        ▼          ▼          ▼          ▼
+Phase 3 (US1/P1) ✅ ──► Phase 4 (US2/P2)  Phase 5 (US3/P3)  Phase 6 (US4/P4)
+     │                        │          │          │
+     └────────────────────────┴──────────┴──────────┘
+                              │
+                              ▼
+                      Phase 7 (Polish)
 ```
 
-### User Story Dependencies
+### Progress Summary
 
-| User Story | 의존성 | 병렬 가능 |
-|------------|--------|-----------|
-| **US1 (P1)** | Foundational 완료 | - |
-| **US2 (P2)** | Foundational 완료 | US1과 병렬 가능 |
-| **US3 (P3)** | US1 완료 권장 | US2와 병렬 가능 |
-| **US4 (P4)** | Foundational 완료 | US1-3과 병렬 가능 |
-
-### Within Each User Story
-
-1. Types/Utils → Services → Hooks → Components → Integration
-2. 테스트 태스크는 구현 전에 작성 (Red-Green)
-3. 각 태스크 완료 후 커밋 권장
+| Phase | Status | Completed | Total |
+|-------|--------|-----------|-------|
+| Phase 1: Setup | ✅ Complete | 11 | 11 |
+| Phase 2: Foundational | ✅ Complete | 18 | 18 |
+| Phase 3: US1 (MVP) | ✅ Complete | 24 | 24 |
+| Phase 4: US2 | ⏳ Pending | 0 | 10 |
+| Phase 5: US3 | ⏳ Pending | 0 | 7 |
+| Phase 6: US4 | ⏳ Pending | 0 | 8 |
+| Phase 7: Polish | 🔄 Partial | 2 | 10 |
+| **Total** | | **55** | **88** |
 
 ---
-
-## Parallel Execution Examples
-
-### Phase 2 (Foundational) 병렬 실행
-
-```bash
-# 타입 정의 - 모두 병렬 가능
-Task T012: DataSource types
-Task T013: Query types
-Task T014: QueryResult types
-Task T015: Visualization types
-Task T016: AppState types
-
-# 서비스 - 일부 병렬 가능
-Task T019: Response parser (T018 의존 없음)
-Task T020: LocalStorage service (독립적)
-```
-
-### Phase 3 (US1) 병렬 실행
-
-```bash
-# 분석 로직 - 병렬 가능
-Task T030: Result type analyzer
-Task T031: Series analyzer
-
-# 차트 스펙 - 모두 병렬 가능
-Task T034: Line chart spec
-Task T035: Area chart spec
-Task T036: Bar chart spec
-Task T037: Stat spec
-Task T038: Table spec
-
-# UI 컴포넌트 - 일부 병렬 가능
-Task T041: PromQL input
-Task T042: URL input
-Task T045: Chart wrapper
-Task T046: StatDisplay
-Task T047: DataTable
-```
-
----
-
-## Implementation Strategy
-
-### MVP First (User Story 1 Only)
-
-1. ✅ Phase 1: Setup 완료
-2. ✅ Phase 2: Foundational 완료
-3. ✅ Phase 3: User Story 1 완료
-4. **STOP**: MVP 검증 - URL 입력 → 쿼리 실행 → 차트 렌더링
-5. 필요시 배포/데모
-
-### Incremental Delivery
-
-| 단계 | 완료 시점 | 제공 가치 |
-|------|-----------|-----------|
-| MVP | US1 완료 | 기본 쿼리 및 시각화 |
-| +US2 | US2 완료 | 데이터소스 저장/재사용 |
-| +US3 | US3 완료 | 시간 범위 커스터마이징 |
-| +US4 | US4 완료 | 완전한 오류 처리 |
-| Final | Polish 완료 | 프로덕션 준비 완료 |
-
----
-
-## Task Summary
-
-| Phase | Task Count | 병렬 가능 |
-|-------|------------|-----------|
-| Phase 1: Setup | 11 | 6 |
-| Phase 2: Foundational | 18 | 13 |
-| Phase 3: US1 (P1) | 24 | 15 |
-| Phase 4: US2 (P2) | 10 | 3 |
-| Phase 5: US3 (P3) | 7 | 4 |
-| Phase 6: US4 (P4) | 8 | 4 |
-| Phase 7: Polish | 10 | 5 |
-| **Total** | **88** | **50** |
 
 ## Notes
 
@@ -382,4 +304,4 @@ Task T047: DataTable
 - [USn] 라벨 = 특정 User Story에 속함
 - 각 체크포인트에서 해당 스토리 독립 테스트 가능
 - 커밋은 태스크 또는 논리적 그룹 단위로 수행
-- MVP 범위: Phase 1-3 (US1까지)
+- **MVP 범위 완료**: Phase 1-3 (US1까지) ✅
