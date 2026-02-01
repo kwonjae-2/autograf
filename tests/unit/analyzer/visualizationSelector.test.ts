@@ -125,7 +125,7 @@ describe('selectVisualization', () => {
 
       // Run multiple times
       const results = Array.from({ length: 100 }, () => selectVisualization(data));
-      
+
       // All results should be identical
       expect(new Set(results).size).toBe(1);
       expect(results[0]).toBe('line');
@@ -139,7 +139,7 @@ describe('getVisualizationRecommendation', () => {
       resultType: 'matrix',
       result: [{ metric: { job: 'test' }, values: [[1, '1']] }],
     };
-    
+
     const { type, reason } = getVisualizationRecommendation(data);
     expect(type).toBe('line');
     expect(reason).toContain('시계열');
@@ -151,7 +151,7 @@ describe('getVisualizationRecommendation', () => {
       resultType: 'scalar',
       result: [1, '42'],
     };
-    
+
     const { type, reason } = getVisualizationRecommendation(data);
     expect(type).toBe('stat');
     expect(reason).toContain('통계 패널');

@@ -8,14 +8,16 @@ Autograf는 Prometheus HTTP API에서 가져온 메트릭 데이터를 자동으
 
 ## 주요 기능
 
-- 🔗 **Prometheus 연결**: URL 입력으로 Prometheus 서버에 직접 연결
+- 🔗 **데이터소스 관리**: Prometheus 서버 연결 정보 저장 및 재사용
 - 📝 **PromQL 쿼리**: 텍스트 입력으로 PromQL 쿼리 실행
+- ⏱️ **시간 범위 설정**: 다양한 시간 범위 프리셋 및 Step 설정
 - 📊 **자동 시각화**: 데이터 타입에 따른 결정론적 차트 선택
   - Matrix (시계열) → Line/Area Chart
   - Vector (인스턴트) → Stat/Bar/Table
   - Scalar → Stat
   - String → Text
 - 🔍 **원본 데이터**: JSON 형식으로 원본 쿼리 결과 확인
+- ⚠️ **오류 처리**: 연결, 인증, 쿼리, CORS, 타임아웃 오류 명확히 표시
 
 ## 핵심 원칙
 
@@ -54,31 +56,35 @@ npm test
 
 # 프로덕션 빌드
 npm run build
+
+# 빌드 미리보기
+npm run preview
 ```
 
 ### 사용 방법
 
-1. Prometheus 서버 URL 입력 (예: `https://prometheus.example.com`)
-2. PromQL 쿼리 작성 (예: `up`, `rate(http_requests_total[5m])`)
-3. "실행" 버튼 클릭 또는 `Ctrl+Enter`
-4. 자동 생성된 시각화 확인
+1. **데이터소스 추가**: 왼쪽 패널에서 "추가" 버튼 클릭
+2. **연결 정보 입력**: 이름, Prometheus URL, Bearer 토큰(선택) 입력
+3. **연결 테스트**: "연결 테스트" 버튼으로 연결 확인
+4. **쿼리 작성**: PromQL 쿼리 입력 (예: `up`, `rate(http_requests_total[5m])`)
+5. **시간 범위 설정**: 프리셋 선택 또는 Step 조정
+6. **실행**: "실행" 버튼 또는 `Ctrl+Enter`
+7. **결과 확인**: 자동 생성된 시각화 및 원본 데이터 확인
 
 ## 프로젝트 상태
 
-✅ **MVP 완료** - 기본 쿼리 및 시각화 기능 구현
+✅ **구현 완료** - 모든 핵심 기능 구현 (86/88 태스크)
 
-### 현재 진행 상황
+### 구현된 기능
 
-| 단계 | 상태 | 설명 |
+| 기능 | 상태 | 설명 |
 |------|------|------|
-| 헌법 정의 | ✅ 완료 | v1.0.0 비준 |
-| 기능 명세 | ✅ 완료 | 001-auto-viz |
-| 기술 계획 | ✅ 완료 | Phase 0-1 완료 |
-| **MVP 구현** | ✅ 완료 | **Phase 1-3 (53 태스크)** |
-| US2: 데이터소스 저장 | ⏳ 대기 | Phase 4 |
-| US3: 시간 범위 설정 | ⏳ 대기 | Phase 5 |
-| US4: 오류 처리 강화 | ⏳ 대기 | Phase 6 |
-| 마무리 | ⏳ 대기 | Phase 7 |
+| 데이터소스 관리 | ✅ | 저장, 편집, 삭제, 연결 테스트 |
+| PromQL 쿼리 | ✅ | 쿼리 입력 및 실행 |
+| 시간 범위/Step | ✅ | 9개 프리셋, 커스텀 Step |
+| 자동 시각화 | ✅ | 결정론적 차트 선택 |
+| 오류 처리 | ✅ | 유형별 상세 오류 표시 |
+| 원본 데이터 | ✅ | JSON 뷰어 |
 
 ### 테스트 현황
 
@@ -92,20 +98,33 @@ npm run build
 autograf/
 ├── src/
 │   ├── components/          # React UI 컴포넌트
-│   │   ├── common/          # 공통 컴포넌트
-│   │   ├── QueryEditor/     # 쿼리 편집기
-│   │   └── Visualization/   # 시각화 컴포넌트
+│   │   ├── common/          # 공통 컴포넌트 (Button, Input, Error 등)
+│   │   ├── DataSource/      # 데이터소스 관리 UI
+│   │   ├── QueryEditor/     # 쿼리 편집기, 시간 범위
+│   │   └── Visualization/   # 차트, 테이블, 통계
 │   ├── services/            # 비즈니스 로직
 │   │   ├── prometheus/      # Prometheus API 클라이언트
 │   │   ├── analyzer/        # 시각화 선택 로직
 │   │   └── storage/         # LocalStorage
 │   ├── types/               # TypeScript 타입
 │   ├── hooks/               # React Hooks
-│   └── utils/               # 유틸리티
+│   └── utils/               # 유틸리티 (시간, 오류, step)
 ├── tests/                   # 테스트
 ├── specs/                   # 기능 명세
 └── dist/                    # 빌드 결과물
 ```
+
+## 시각화 규칙
+
+| 데이터 타입 | 시리즈 수 | 시각화 |
+|------------|----------|--------|
+| Matrix | 1-10 | Line Chart |
+| Matrix | 11+ | Area Chart (Stacked) |
+| Vector | 1 | Stat Display |
+| Vector | 2-5 | Bar Chart |
+| Vector | 6+ | Table |
+| Scalar | - | Stat Display |
+| String | - | Text |
 
 ## 문서
 
@@ -115,7 +134,7 @@ autograf/
 ### 기능 명세 (001-auto-viz)
 - [기능 명세서](specs/001-auto-viz/spec.md) - 사용자 스토리 및 요구사항
 - [구현 계획](specs/001-auto-viz/plan.md) - 기술 컨텍스트 및 구조
-- [구현 태스크](specs/001-auto-viz/tasks.md) - 55/88 완료
+- [구현 태스크](specs/001-auto-viz/tasks.md) - 86/88 완료
 
 ## 라이선스
 

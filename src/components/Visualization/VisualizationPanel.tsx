@@ -93,7 +93,7 @@ export function VisualizationPanel({ result }: VisualizationPanelProps) {
             <div className="ml-3">
               <h3 className="text-sm font-medium text-yellow-800">대량 데이터 경고</h3>
               <p className="mt-1 text-sm text-yellow-700">
-                {dataPoints.toLocaleString()}개의 데이터 포인트가 있습니다. 
+                {dataPoints.toLocaleString()}개의 데이터 포인트가 있습니다.
                 성능을 위해 step 값을 늘리는 것을 권장합니다.
               </p>
             </div>
@@ -115,7 +115,7 @@ export function VisualizationPanel({ result }: VisualizationPanelProps) {
             </div>
           </div>
         </div>
-        
+
         <div className="p-4">
           {(type === 'line' || type === 'area' || type === 'bar') && (
             <Chart config={chartConfig} height={400} />

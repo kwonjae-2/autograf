@@ -5,13 +5,14 @@
 
 import { useState, useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import type { QueryResult, AppError as AppErrorType } from '../types';
+import type { QueryResult, AppError as AppErrorType, AuthConfig } from '../types';
 import { queryRange } from '../services/prometheus/client';
 import { AppError } from '../utils/errors';
 
 interface QueryOptions {
   url: string;
   query: string;
+  auth?: AuthConfig | null;
   start?: number;
   end?: number;
   step?: string;
@@ -23,6 +24,7 @@ interface UsePrometheusQueryResult {
   isLoading: boolean;
   execute: (options: QueryOptions) => void;
   reset: () => void;
+  retry: () => void;
 }
 
 /**
@@ -31,6 +33,7 @@ interface UsePrometheusQueryResult {
 export function usePrometheusQuery(): UsePrometheusQueryResult {
   const [data, setData] = useState<QueryResult | null>(null);
   const [error, setError] = useState<AppErrorType | null>(null);
+  const [lastOptions, setLastOptions] = useState<QueryOptions | null>(null);
 
   const mutation = useMutation({
     mutationFn: async (options: QueryOptions) => {
@@ -40,7 +43,7 @@ export function usePrometheusQuery(): UsePrometheusQueryResult {
       const step = options.step ?? '15s';
 
       return queryRange(
-        { baseUrl: options.url },
+        { baseUrl: options.url, auth: options.auth },
         options.query,
         start,
         end,
@@ -63,6 +66,7 @@ export function usePrometheusQuery(): UsePrometheusQueryResult {
 
   const execute = useCallback(
     (options: QueryOptions) => {
+      setLastOptions(options);
       mutation.mutate(options);
     },
     [mutation]
@@ -71,8 +75,15 @@ export function usePrometheusQuery(): UsePrometheusQueryResult {
   const reset = useCallback(() => {
     setData(null);
     setError(null);
+    setLastOptions(null);
     mutation.reset();
   }, [mutation]);
+
+  const retry = useCallback(() => {
+    if (lastOptions) {
+      mutation.mutate(lastOptions);
+    }
+  }, [mutation, lastOptions]);
 
   return {
     data,
@@ -80,5 +91,6 @@ export function usePrometheusQuery(): UsePrometheusQueryResult {
     isLoading: mutation.isPending,
     execute,
     reset,
+    retry,
   };
 }

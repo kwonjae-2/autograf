@@ -1,18 +1,70 @@
 import { useState } from 'react';
 import { QueryEditor } from './components/QueryEditor';
 import { VisualizationPanel } from './components/Visualization';
-import { LoadingSpinner, ErrorDisplay } from './components/common';
+import { DataSourcePanel } from './components/DataSource';
+import {
+  LoadingSpinner,
+  ErrorDisplay,
+  ConnectionErrorDisplay,
+  QueryErrorDisplay,
+  TimeoutErrorDisplay,
+} from './components/common';
 import { usePrometheusQuery } from './hooks/usePrometheusQuery';
+import { useDataSources } from './hooks/useDataSources';
+import { getResolvedTimeRangeFromPreset } from './utils/timeRangeResolver';
+import { DEFAULT_PRESET_ID, getDefaultPreset } from './utils/timeRangePresets';
+import type { AppError } from './types';
 
 function App() {
-  const [prometheusUrl, setPrometheusUrl] = useState('');
   const [promql, setPromql] = useState('');
+  const [timeRangePreset, setTimeRangePreset] = useState(DEFAULT_PRESET_ID);
+  const [step, setStep] = useState(getDefaultPreset().defaultStep);
 
-  const { data, error, isLoading, execute } = usePrometheusQuery();
+  const {
+    dataSources,
+    activeDataSource,
+    setActiveDataSource,
+    addDataSource,
+    editDataSource,
+    removeDataSource,
+    testConnection,
+  } = useDataSources();
+
+  const { data, error, isLoading, execute, retry } = usePrometheusQuery();
+
+  const handleTimeRangeChange = (presetId: string, defaultStep: string) => {
+    setTimeRangePreset(presetId);
+    setStep(defaultStep);
+  };
 
   const handleExecute = () => {
-    if (prometheusUrl && promql) {
-      execute({ url: prometheusUrl, query: promql });
+    if (activeDataSource && promql) {
+      const { start, end } = getResolvedTimeRangeFromPreset(timeRangePreset);
+      execute({
+        url: activeDataSource.url,
+        query: promql,
+        auth: activeDataSource.auth,
+        start,
+        end,
+        step,
+      });
+    }
+  };
+
+  // Render error based on type
+  const renderError = (err: AppError) => {
+    switch (err.type) {
+      case 'connection':
+      case 'cors':
+        return <ConnectionErrorDisplay error={err} onRetry={retry} />;
+      case 'query':
+        return <QueryErrorDisplay error={err} />;
+      case 'timeout':
+        return <TimeoutErrorDisplay error={err} onRetry={retry} />;
+      case 'auth':
+        return <ConnectionErrorDisplay error={err} />;
+      default:
+        return <ErrorDisplay error={err} onRetry={retry} />;
     }
   };
 
@@ -45,36 +97,98 @@ function App() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Query Editor */}
-        <section className="mb-8">
-          <QueryEditor
-            prometheusUrl={prometheusUrl}
-            promql={promql}
-            onUrlChange={setPrometheusUrl}
-            onPromqlChange={setPromql}
-            onExecute={handleExecute}
-            isLoading={isLoading}
-          />
-        </section>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Sidebar - DataSource Panel */}
+          <aside className="lg:col-span-1">
+            <DataSourcePanel
+              dataSources={dataSources}
+              activeDataSource={activeDataSource}
+              onSelect={setActiveDataSource}
+              onAdd={addDataSource}
+              onEdit={editDataSource}
+              onDelete={removeDataSource}
+              onTestConnection={testConnection}
+            />
+          </aside>
 
-        {/* Results */}
-        <section>
-          {isLoading && (
-            <div className="flex justify-center py-12">
-              <LoadingSpinner size="lg" />
-            </div>
-          )}
+          {/* Main Content Area */}
+          <div className="lg:col-span-3 space-y-6">
+            {/* Query Editor */}
+            <section>
+              <QueryEditor
+                promql={promql}
+                timeRangePreset={timeRangePreset}
+                step={step}
+                onPromqlChange={setPromql}
+                onTimeRangeChange={handleTimeRangeChange}
+                onStepChange={setStep}
+                onExecute={handleExecute}
+                isLoading={isLoading}
+                disabled={!activeDataSource}
+                activeDataSourceName={activeDataSource?.name}
+              />
+            </section>
 
-          {error && !isLoading && <ErrorDisplay error={error} />}
+            {/* Results */}
+            <section>
+              {isLoading && (
+                <div className="flex justify-center py-12">
+                  <LoadingSpinner size="lg" />
+                </div>
+              )}
 
-          {data && !isLoading && !error && <VisualizationPanel result={data} />}
+              {error && !isLoading && renderError(error)}
 
-          {!data && !isLoading && !error && (
-            <div className="text-center py-12 text-gray-500">
-              <p>Prometheus URL과 PromQL을 입력하고 실행하세요.</p>
-            </div>
-          )}
-        </section>
+              {data && !isLoading && !error && <VisualizationPanel result={data} />}
+
+              {!data && !isLoading && !error && (
+                <div className="text-center py-12 text-gray-500 card p-8">
+                  {!activeDataSource ? (
+                    <>
+                      <svg
+                        className="mx-auto h-12 w-12 text-gray-400 mb-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 12h14M12 5l7 7-7 7"
+                        />
+                      </svg>
+                      <p className="font-medium">데이터소스를 추가해주세요</p>
+                      <p className="text-sm mt-1">
+                        왼쪽 패널에서 Prometheus 서버 연결 정보를 설정하세요
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <svg
+                        className="mx-auto h-12 w-12 text-gray-400 mb-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                        />
+                      </svg>
+                      <p className="font-medium">PromQL 쿼리를 입력하고 실행하세요</p>
+                      <p className="text-sm mt-1">
+                        예: up, rate(http_requests_total[5m])
+                      </p>
+                    </>
+                  )}
+                </div>
+              )}
+            </section>
+          </div>
+        </div>
       </main>
 
       {/* Footer */}
