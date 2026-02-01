@@ -22,7 +22,16 @@ Autograf는 Prometheus HTTP API에서 가져온 메트릭 데이터를 자동으
 
 ## 프로젝트 상태
 
-🚧 **개발 준비 중** - 헌법(Constitution) 정의 완료
+🚧 **개발 준비 중** - 기능 명세서 작성 완료
+
+### 현재 진행 상황
+
+| 단계 | 상태 | 설명 |
+|------|------|------|
+| 헌법 정의 | ✅ 완료 | v1.0.0 비준 |
+| 기능 명세 | ✅ 완료 | 001-auto-viz |
+| 기술 계획 | ⏳ 대기 | `/speckit.plan` 실행 필요 |
+| 구현 | ⏳ 대기 | - |
 
 ## 프로젝트 구조
 
@@ -35,12 +44,18 @@ autograf/
 │   │   └── constitution.md     # 프로젝트 헌법 (v1.0.0)
 │   ├── scripts/                # 자동화 스크립트
 │   └── templates/              # 문서 템플릿
+├── specs/                      # 기능 명세서
+│   └── 001-auto-viz/           # PromQL 자동 시각화
+│       ├── spec.md             # 기능 명세서
+│       └── checklists/         # 품질 체크리스트
+│           └── requirements.md
 └── README.md
 ```
 
 ## 문서
 
 - [프로젝트 헌법](.specify/memory/constitution.md) - 핵심 원칙 및 거버넌스
+- [기능 명세서](specs/001-auto-viz/spec.md) - PromQL 자동 시각화 상세 명세
 
 ## 라이선스
 
