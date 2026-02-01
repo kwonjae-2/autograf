@@ -93,7 +93,7 @@ export function validateStep(
  */
 export function suggestStep(startTimestamp: number, endTimestamp: number): string {
   const duration = endTimestamp - startTimestamp;
-  
+
   // Target around 1000 data points
   const targetPoints = 1000;
   const stepSeconds = Math.ceil(duration / targetPoints);

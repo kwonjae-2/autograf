@@ -31,7 +31,7 @@ export function QueryErrorDisplay({ error }: QueryErrorDisplayProps) {
         <div className="ml-4 flex-1">
           <h3 className="text-lg font-medium text-orange-800">쿼리 오류</h3>
           <p className="mt-2 text-sm text-orange-700">{error.message}</p>
-          
+
           {error.details && (
             <div className="mt-3 p-3 bg-orange-100 rounded-md">
               <code className="text-xs text-orange-900 font-mono whitespace-pre-wrap">

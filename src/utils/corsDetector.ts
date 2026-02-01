@@ -10,7 +10,7 @@
 export function isCorsError(error: unknown): boolean {
   if (error instanceof TypeError) {
     const message = error.message.toLowerCase();
-    
+
     // Common CORS error patterns
     if (message.includes('failed to fetch')) {
       return true;

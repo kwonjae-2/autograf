@@ -30,7 +30,7 @@ export function resolveTimeRange(timeRange: TimeRange): ResolvedTimeRange {
  */
 function resolveRelativeTimeRange(timeRange: RelativeTimeRange): ResolvedTimeRange {
   const now = Math.floor(Date.now() / 1000);
-  
+
   const start = parseRelativeTime(timeRange.from, now);
   const end = parseRelativeTime(timeRange.to, now);
 
@@ -80,7 +80,7 @@ export function createTimeRangeFromPreset(presetId: string): TimeRange {
 
   // Convert duration to relative time string
   const durationStr = formatDuration(preset.duration);
-  
+
   return {
     type: 'relative',
     from: `now-${durationStr}`,

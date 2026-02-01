@@ -50,7 +50,7 @@ export function DataSourcePanel({
 
   const handleEdit = (input: DataSourceInput) => {
     if (!editingDataSource) return;
-    
+
     setIsLoading(true);
     try {
       const updated = onEdit(editingDataSource.id, input);

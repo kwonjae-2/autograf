@@ -36,7 +36,7 @@ export function DataSourceForm({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const auth: AuthConfig | null = token.trim()
       ? { type: 'bearer', token: token.trim() }
       : null;
@@ -94,7 +94,7 @@ export function DataSourceForm({
           disabled={isLoading}
           required
         />
-        
+
         {onTestConnection && (
           <div className="flex items-center gap-2">
             <button

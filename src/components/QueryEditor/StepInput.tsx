@@ -63,7 +63,7 @@ export function StepInput({
       >
         Step
       </label>
-      
+
       <div className="flex gap-2">
         <select
           id="step-preset"

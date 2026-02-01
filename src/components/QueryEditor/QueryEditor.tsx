@@ -56,7 +56,7 @@ export function QueryEditor({
           </span>
         )}
       </div>
-      
+
       <div className="space-y-4">
         {disabled && (
           <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-md">

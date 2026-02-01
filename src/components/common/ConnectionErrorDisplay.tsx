@@ -38,7 +38,7 @@ export function ConnectionErrorDisplay({ error, onRetry }: ConnectionErrorDispla
             {isCors ? 'CORS 오류' : '연결 오류'}
           </h3>
           <p className="mt-2 text-sm text-red-700">{error.message}</p>
-          
+
           {error.details && (
             <p className="mt-1 text-xs text-red-600">{error.details}</p>
           )}
