@@ -29,7 +29,7 @@ Autograf는 Prometheus HTTP API에서 가져온 메트릭 데이터를 자동으
 
 ## 프로젝트 상태
 
-🚧 **개발 준비 중** - 기술 계획 완료
+🚧 **개발 준비 중** - 태스크 분해 완료
 
 ### 현재 진행 상황
 
@@ -38,8 +38,21 @@ Autograf는 Prometheus HTTP API에서 가져온 메트릭 데이터를 자동으
 | 헌법 정의 | ✅ 완료 | v1.0.0 비준 |
 | 기능 명세 | ✅ 완료 | 001-auto-viz |
 | 기술 계획 | ✅ 완료 | Phase 0-1 완료 |
-| 태스크 분해 | ⏳ 대기 | `/speckit.tasks` 실행 필요 |
-| 구현 | ⏳ 대기 | - |
+| 태스크 분해 | ✅ 완료 | 88개 태스크 |
+| 구현 | ⏳ 대기 | `/speckit.implement` 실행 필요 |
+
+### 태스크 요약
+
+| Phase | 설명 | 태스크 수 |
+|-------|------|-----------|
+| Phase 1 | Setup (프로젝트 초기화) | 11 |
+| Phase 2 | Foundational (핵심 인프라) | 18 |
+| Phase 3 | US1 - PromQL 쿼리 및 시각화 (MVP) | 24 |
+| Phase 4 | US2 - 데이터소스 설정 | 10 |
+| Phase 5 | US3 - 시간 범위 설정 | 7 |
+| Phase 6 | US4 - 오류 처리 | 8 |
+| Phase 7 | Polish | 10 |
+| **Total** | | **88** |
 
 ## 프로젝트 구조
 
@@ -60,6 +73,7 @@ autograf/
 │       ├── research.md         # 기술 연구
 │       ├── data-model.md       # 데이터 모델
 │       ├── quickstart.md       # 개발 시작 가이드
+│       ├── tasks.md            # 구현 태스크 (88개)
 │       ├── contracts/          # API 계약
 │       │   └── prometheus-api.md
 │       └── checklists/         # 품질 체크리스트
@@ -77,6 +91,7 @@ autograf/
 - [기술 연구](specs/001-auto-viz/research.md) - 기술 결정 및 근거
 - [데이터 모델](specs/001-auto-viz/data-model.md) - 엔티티 및 상태 정의
 - [개발 시작 가이드](specs/001-auto-viz/quickstart.md) - 프로젝트 설정 방법
+- [구현 태스크](specs/001-auto-viz/tasks.md) - 88개 태스크 목록
 - [Prometheus API 계약](specs/001-auto-viz/contracts/prometheus-api.md) - API 통합 명세
 
 ## 라이선스
