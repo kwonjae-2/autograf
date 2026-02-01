@@ -16,13 +16,20 @@ Autograf는 Prometheus HTTP API에서 가져온 메트릭 데이터를 자동으
 
 ## 기술 스택
 
-- **호스팅**: GitHub Pages
-- **데이터 소스**: Prometheus HTTP API (클라이언트 직접 호출)
-- **런타임**: 현대 웹 브라우저
+| 영역 | 기술 |
+|------|------|
+| **Language** | TypeScript 5.x (strict mode) |
+| **Framework** | React 18 |
+| **Build Tool** | Vite 5.x |
+| **Charts** | Apache ECharts 5.x |
+| **State** | TanStack Query + React Context |
+| **Styling** | Tailwind CSS 3.x |
+| **Testing** | Vitest + React Testing Library |
+| **Hosting** | GitHub Pages |
 
 ## 프로젝트 상태
 
-🚧 **개발 준비 중** - 기능 명세서 작성 완료
+🚧 **개발 준비 중** - 기술 계획 완료
 
 ### 현재 진행 상황
 
@@ -30,7 +37,8 @@ Autograf는 Prometheus HTTP API에서 가져온 메트릭 데이터를 자동으
 |------|------|------|
 | 헌법 정의 | ✅ 완료 | v1.0.0 비준 |
 | 기능 명세 | ✅ 완료 | 001-auto-viz |
-| 기술 계획 | ⏳ 대기 | `/speckit.plan` 실행 필요 |
+| 기술 계획 | ✅ 완료 | Phase 0-1 완료 |
+| 태스크 분해 | ⏳ 대기 | `/speckit.tasks` 실행 필요 |
 | 구현 | ⏳ 대기 | - |
 
 ## 프로젝트 구조
@@ -38,7 +46,8 @@ Autograf는 Prometheus HTTP API에서 가져온 메트릭 데이터를 자동으
 ```
 autograf/
 ├── .cursor/                    # Cursor IDE 설정
-│   └── commands/               # Speckit 명령어
+│   ├── commands/               # Speckit 명령어
+│   └── rules/                  # Cursor 규칙
 ├── .specify/                   # 프로젝트 명세 프레임워크
 │   ├── memory/
 │   │   └── constitution.md     # 프로젝트 헌법 (v1.0.0)
@@ -47,15 +56,28 @@ autograf/
 ├── specs/                      # 기능 명세서
 │   └── 001-auto-viz/           # PromQL 자동 시각화
 │       ├── spec.md             # 기능 명세서
+│       ├── plan.md             # 구현 계획
+│       ├── research.md         # 기술 연구
+│       ├── data-model.md       # 데이터 모델
+│       ├── quickstart.md       # 개발 시작 가이드
+│       ├── contracts/          # API 계약
+│       │   └── prometheus-api.md
 │       └── checklists/         # 품질 체크리스트
-│           └── requirements.md
 └── README.md
 ```
 
 ## 문서
 
+### 프로젝트 기반
 - [프로젝트 헌법](.specify/memory/constitution.md) - 핵심 원칙 및 거버넌스
-- [기능 명세서](specs/001-auto-viz/spec.md) - PromQL 자동 시각화 상세 명세
+
+### 기능 명세 (001-auto-viz)
+- [기능 명세서](specs/001-auto-viz/spec.md) - 사용자 스토리 및 요구사항
+- [구현 계획](specs/001-auto-viz/plan.md) - 기술 컨텍스트 및 구조
+- [기술 연구](specs/001-auto-viz/research.md) - 기술 결정 및 근거
+- [데이터 모델](specs/001-auto-viz/data-model.md) - 엔티티 및 상태 정의
+- [개발 시작 가이드](specs/001-auto-viz/quickstart.md) - 프로젝트 설정 방법
+- [Prometheus API 계약](specs/001-auto-viz/contracts/prometheus-api.md) - API 통합 명세
 
 ## 라이선스
 
