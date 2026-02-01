@@ -1,11 +1,10 @@
 /**
- * QueryEditor Container Component
+ * Query Editor
  */
 
 import { PromQLInput } from './PromQLInput';
 import { TimeRangeSelector } from './TimeRangeSelector';
 import { StepInput } from './StepInput';
-import { Button } from '../common';
 import { getResolvedTimeRangeFromPreset } from '../../utils/timeRangeResolver';
 
 interface QueryEditorProps {
@@ -18,7 +17,6 @@ interface QueryEditorProps {
   onExecute: () => void;
   isLoading?: boolean;
   disabled?: boolean;
-  activeDataSourceName?: string;
 }
 
 export function QueryEditor({
@@ -31,73 +29,61 @@ export function QueryEditor({
   onExecute,
   isLoading = false,
   disabled = false,
-  activeDataSourceName,
 }: QueryEditorProps) {
   const canExecute = !disabled && promql.trim() !== '';
+  const resolvedTimeRange = getResolvedTimeRangeFromPreset(timeRangePreset);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    // Ctrl/Cmd + Enter to execute
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter' && canExecute && !isLoading) {
       e.preventDefault();
       onExecute();
     }
   };
 
-  // Get resolved time range for step validation
-  const resolvedTimeRange = getResolvedTimeRangeFromPreset(timeRangePreset);
-
   return (
-    <div className="card p-6" onKeyDown={handleKeyDown}>
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-gray-900">쿼리 편집기</h2>
-        {activeDataSourceName && (
-          <span className="text-sm text-gray-500">
-            연결: <span className="font-medium text-primary-600">{activeDataSourceName}</span>
-          </span>
-        )}
-      </div>
-
-      <div className="space-y-4">
-        {disabled && (
-          <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-md">
-            <p className="text-sm text-yellow-800">
-              쿼리를 실행하려면 먼저 데이터소스를 선택하세요.
-            </p>
-          </div>
-        )}
-
+    <div className="card" onKeyDown={handleKeyDown}>
+      <div className="p-4 space-y-3">
+        {/* Query Input */}
         <PromQLInput
           value={promql}
           onChange={onPromqlChange}
           disabled={isLoading || disabled}
         />
 
-        <div className="grid grid-cols-2 gap-4">
-          <TimeRangeSelector
-            value={timeRangePreset}
-            onChange={onTimeRangeChange}
-            disabled={isLoading || disabled}
-          />
-          <StepInput
-            value={step}
-            onChange={onStepChange}
-            startTimestamp={resolvedTimeRange.start}
-            endTimestamp={resolvedTimeRange.end}
-            disabled={isLoading || disabled}
-          />
-        </div>
+        {/* Controls */}
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 flex-1">
+            <TimeRangeSelector
+              value={timeRangePreset}
+              onChange={onTimeRangeChange}
+              disabled={isLoading || disabled}
+            />
+            <StepInput
+              value={step}
+              onChange={onStepChange}
+              startTimestamp={resolvedTimeRange.start}
+              endTimestamp={resolvedTimeRange.end}
+              disabled={isLoading || disabled}
+            />
+          </div>
 
-        <div className="flex items-center justify-between pt-2">
-          <p className="text-xs text-gray-500">
-            Ctrl + Enter로 실행
-          </p>
-          <Button
+          <button
             onClick={onExecute}
-            disabled={!canExecute}
-            isLoading={isLoading}
+            disabled={!canExecute || isLoading}
+            className="btn-primary px-6 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isLoading ? '실행 중...' : '실행'}
-          </Button>
+            {isLoading ? (
+              <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+              </svg>
+            ) : (
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            )}
+          </button>
         </div>
       </div>
     </div>

@@ -1,26 +1,22 @@
 /**
- * Stat Display Component
+ * Stat Display
  */
 
 import type { ChartConfig } from '../../types';
 
 interface StatDisplayProps {
   config: ChartConfig;
-  className?: string;
 }
 
-export function StatDisplay({ config, className = '' }: StatDisplayProps) {
-  const { value, unit } = config;
-
+export function StatDisplay({ config }: StatDisplayProps) {
   return (
-    <div className={`flex items-center justify-center p-8 ${className}`}>
-      <div className="text-center">
-        <div className="text-5xl font-bold text-gray-900 tabular-nums">
-          {value ?? 'N/A'}
-          {unit && <span className="text-2xl font-normal text-gray-500 ml-2">{unit}</span>}
-        </div>
-        <p className="mt-2 text-sm text-gray-500">현재 값</p>
+    <div className="py-12 text-center">
+      <div className="text-5xl font-semibold text-slate-100 tabular-nums">
+        {config.value ?? 'N/A'}
       </div>
+      {config.unit && (
+        <div className="mt-2 text-sm text-slate-500">{config.unit}</div>
+      )}
     </div>
   );
 }
